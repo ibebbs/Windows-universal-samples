@@ -9,21 +9,19 @@
 //
 //*********************************************************
 
+using System;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Enumeration;
 using Windows.Devices.PointOfService;
-using System;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage.Streams;
-using SDKTemplate;
-
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace BarcodeScannerSample
+namespace SDKTemplate
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -164,11 +162,11 @@ namespace BarcodeScannerSample
         /// <param name="args"> Contains the ClamiedBarcodeScanner that is sending this request</param>
         async void claimedScanner_ReleaseDeviceRequested(object sender, ClaimedBarcodeScanner e)
         {
+            // always retain the device
+            e.RetainDevice();
+
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                // always retain the device
-                e.RetainDevice();
-
                 rootPage.NotifyUser("Event ReleaseDeviceRequested received. Retaining the barcode scanner.", NotifyType.StatusMessage);
             });
         }
